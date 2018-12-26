@@ -6,16 +6,16 @@
 							@if(!Auth::check())
 							<li><a href="{{url('dn')}}">Login</a></li>
 							@else
-							<li> <a href="{{url('writepost')}}">Write post</a></li>
+							
 							<li> <img class="avatar" src="{{url($profile['avatar'])}}" class="
 								img-responsive">,<br><h1> HI, {{$profile['name']}}</h1></li>
+								<li> <a href="{{url('writepost')}}">Write post</a></li>
 								@if($profile['account_type']==1)
 								<li><a href="{{url('ad')}}">Trang admin</a></li>
 								@endif
 							<li> <a href="{{url('out')}}">Đăng xuất</a></li>
 							<li> <a href="{{url('bio')}}">Cập nhật giới thiệu và Avatar</a></li>
 							@endif
-							
 							
 						<!-- 	<li><a href="index.html">Home</a></li>
 							<li><a href="about.html">About Us</a></li>

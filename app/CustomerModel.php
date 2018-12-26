@@ -1,0 +1,13 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class CustomerModel extends Model
+{
+    //
+    protected $table='customer';
+   protected $fileTable=['id',	'name',	'address',	'email',	'phone'];
+   public $timestamps = false;
+}

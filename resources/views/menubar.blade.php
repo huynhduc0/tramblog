@@ -14,6 +14,7 @@
 						<!-- nav -->
 						<ul class="nav-menu nav navbar-nav">
 							<li><a href="{{url('homepage')}}">News</a></li>
+							<li><a href="{{url('shop/home')}}">Shop</a></li>
 							@php ($i = 1)
 							@foreach($types as $value)
 							<li class="cat-{{$i}}"><a href="{{url('category/'.$value['id'])}}">{{$value['type_name']}}</a></li>

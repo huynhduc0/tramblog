@@ -36,7 +36,6 @@
 					</div>
 				</div>
 			</div>
-		
 			<!-- /Page Header -->
 		</header>
 		<!-- /Header -->
@@ -49,70 +48,50 @@
 					<div class="col-md-8">
 						<div class="row">
 							<!-- post -->
+							@if(count($post['Posts'])>0)
 							<div class="col-md-12">
 								<div class="post post-thumb">
-									<a class="post-img" href="{{url($post['Posts'][0]['id'])}}"><img src="{{$post['Posts'][0]['image']}}" alt=""></a>
+									<a class="post-img" href="{{url('view/'.$post['Posts'][count($post['Posts'])-1]['id'])}}"><img src="{{$post['Posts'][count($post['Posts'])-1]['image']}}" alt=""></a>
 									<div class="post-body">
 										<div class="post-meta">
-											<a class="post-category cat-{{$post['Posts'][0]['type_id']}}" href="#">{{$post['type']['type_name']}}</a>
-											<span class="post-date">{{$post['type']['created_at']}}</span>
+											<a class="post-category cat-{{$post['Posts'][count($post['Posts'])-1]['type_id']}}" href="#">{{$post['type']['type_name']}}</a>
+											<span class="post-date">{{$post['Posts'][count($post['Posts'])-1]['created_at']}}</span>
 										</div>
-										<h3 class="post-title"><a href="blog-post.html">{{$post['Posts'][0]['title']}}</a></h3>
+										<h3 class="post-title"><a href="{{url('view/'.$post['Posts'][count($post['Posts'])-1]['id'])}}">{{$post['Posts'][count($post['Posts'])-1]['title']}}</a></h3>
 									</div>
 								</div>
 							</div>
 							<!-- /post -->
-										
+							@else
+							<div class="alert alert-danger" role="alert">
+								<strong>Oh snap!</strong> Không có bài viết nào trong mục này
+							</div>
+							@endif
 							<!-- post -->
-							@for($i=1;$i<3;$i++)
+							@if(count($post['Posts'])>0)
+							@foreach ($post['Posts'] as $value)
 							<div class="col-md-6">
 								<div class="post">
-									<a class="post-img" href="blog-post.html"><img src="./img/post-4.jpg" alt=""></a>
+									<a class="post-img" href="{{url('view/'.$value['id'])}}"><img src="{{$value['image']}}" alt=""></a>
 									<div class="post-body">
 										<div class="post-meta">
-											<a class="post-category cat-2" href="#">JavaScript</a>
-											<span class="post-date">March 27, 2018</span>
+										<a class="post-category cat-{{$value['type_id']}}" href="#">{{$post['type']['type_name']}}</a>
+											<span class="post-date">{{$value['created_at']}}</span>
 										</div>
-										<h3 class="post-title"><a href="blog-post.html">Chrome Extension Protects Against JavaScript-Based CPU Side-Channel Attacks</a></h3>
+											<h3 class="post-title"><a href="{{url('view/'.$value['id'])}}">{{$value['title']}}</a></h3>
 									</div>
 								</div>
 							</div>
-							@endfor
+							@endforeach
+							@endif
 							<!-- /post -->
 							
 							<div class="clearfix visible-md visible-lg"></div>
-							
-							<!-- ad -->
-							<div class="col-md-12">
-								<div class="section-row">
-									<a href="#">
-										<img class="img-responsive center-block" src="./img/ad-2.jpg" alt="">
-									</a>
-								</div>
-							</div>
-							<!-- ad -->
-							
-							<!-- post -->
-							<div class="col-md-12">
-								<div class="post post-row">
-									<a class="post-img" href="blog-post.html"><img src="./img/post-2.jpg" alt=""></a>
-									<div class="post-body">
-										<div class="post-meta">
-											<a class="post-category cat-2" href="#">JavaScript</a>
-											<span class="post-date">March 27, 2018</span>
-										</div>
-										<h3 class="post-title"><a href="blog-post.html">Ask HN: Does Anybody Still Use JQuery?</a></h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-									</div>
-								</div>
-							</div>
-							<!-- /post -->
-						
 
 							
 							<div class="col-md-12">
 								<div class="section-row">
-									<button class="primary-button center-block">Load More</button>
+									{{ $post['Posts']->links() }}
 								</div>
 							</div>
 						</div>

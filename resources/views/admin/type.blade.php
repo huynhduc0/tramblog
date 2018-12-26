@@ -31,6 +31,10 @@
                             <a href="url('admin_type')">
                                 <i class="fas fa-chart-bar"></i>User và Thể loại</a>
                         </li>
+                         <li>
+                            <a href="url('admin_shop')">
+                                <i class="fas fa-chart-bar"></i>Shop</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -47,13 +51,26 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li class="has-sub">
+
+                       <li class="has-sub" >
                             <a class="js-arrow" href="{{url('ad')}}">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
                         <li class="active">
-                            <a href="chart.html">
+                            <a href="{{url('admin_type')}}">
                                 <i class="fas fa-chart-bar"></i>User và Thể loại</a>
+                        </li>
+                          <li class="has-sub">
+                            <a href="{{url('admin_shop_add')}}">
+                                <i class="fas fa-chart-bar"></i>Thêm sản phẩm</a>
+                        </li>
+                         <li class="has-sub">
+                            <a href="{{url('admin_shop')}}">
+                                <i class="fas fa-chart-bar"></i>Bill</a>
+                        </li>
+                         <li class="has-sub">
+                            <a href="{{url('admin_product')}}">
+                                <i class="fas fa-chart-bar"></i>Hàng và loại hàng</a>
                         </li>
                       
                     </ul>

@@ -7,9 +7,15 @@ use App\User;
 use App\CommentsModel;
 use App\HomeModel;
 use App\TypeModel;
+use App\BillModel;
+use App\BillDetailModel;
+use App\CustomerModel;
+use App\BrandModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
+use App\ShopModel;
+use Mail;
 class AdminController extends Controller
 {
     //
@@ -60,8 +66,6 @@ class AdminController extends Controller
 			 		->get()
 			 		->toArray();
     	return view('admin.index', compact('post_this_week','comment_this_week','profile','sum_view','task','all'));
-    	
-    	
     }
 
     function duyet($id)
@@ -103,6 +107,47 @@ class AdminController extends Controller
     	$type->save();
     	return redirect()->back();
     }
+     function hienhang($id)
+    {
+        echo AdminController::check();
+        $bai=ShopModel::find($id);
+        $bai->active=0;
+        $bai->save();
+        return redirect()->back();
+    }
+     function anhang($id)
+    {
+        $bai=ShopModel::find($id);
+        $bai->active=1;
+        $bai->save();
+        return redirect()->back();
+    }
+
+    function duyetloaihang($id)
+    {
+        echo AdminController::check();
+        $bai=BrandModel::find($id);
+        $bai->status=1;
+        $bai->save();
+        return redirect()->back();
+    }
+     function chanloaihang($id)
+    {
+        $bai=BrandModel::find($id);
+        $bai->status=0;
+        $bai->save();
+        return redirect()->back();
+    }
+
+     function addtypeproduct(Request $req)
+    {
+        echo AdminController::check();
+        $type= new BrandModel;
+        $type->brandname=$req->name;
+        $type->save();
+        return redirect()->back();
+    }
+
     function type()
     {
     	echo AdminController::check();
@@ -113,6 +158,30 @@ class AdminController extends Controller
         $users=User::select('*')->get()->toArray();
     	return view('admin.type', compact('admintypes','users'));
 	}
+    //rdtfyguhjkl
+
+
+
+    function admin_product()
+    {
+        echo AdminController::check();
+        $brand=BrandModel::select('*')->get()->toArray();
+        foreach ($brand as $key=>$value) {
+            $brand[$key]['count']=BrandModel::find($value['id'])->posts()->get()->toArray();
+        };
+        $sanpham=ShopModel::select('*')->get()->toArray();
+         foreach ($sanpham as $key=>$value) {
+            $sanpham[$key]['img']= explode(',',$value['img']);
+        }
+        return view('admin.hang', compact('brand','sanpham'));
+    }
+     function shop()
+    {
+        echo AdminController::check();
+        $brand= BrandModel::all();
+        // dd($brand);
+        return view('admin.shop', compact('brand'));
+    }
 	 function changetype_acc(Request $req)
       {
       	$acc=User::find($req->id);
@@ -126,4 +195,118 @@ class AdminController extends Controller
       	$type->save();
       	return redirect()->back();
       }
+       function updatetypeproduct(Request $req)
+      {
+        $type=BrandModel::find($req->id);
+        $type->brandname= $req->newname;
+        $type->save();
+        return redirect()->back();
+      }
+      function suaproduct($id){
+        $product=ShopModel::find($id);
+         $brand= BrandModel::all();
+        return view("admin.suaproduct", compact('product','brand'));
+      }
+      function postaddproduct(Request $req)
+      {
+        // dd($req->quantity);
+        $product = new ShopModel;
+        $product->name = $req->name;
+        $product->price = $req->price;
+        $product->count =$req->quantity;
+        $product->BrandID = $req->type_id;
+        $product->description = $req->description;
+        $product->img=substr($req->image,0,strlen($req->image)-1);
+        $product->save();
+        return redirect()->back();
+      }
+      function saveproduct(Request $req,$id)
+      {
+        // dd($req);
+          $product = ShopModel::find($id);
+        $product->name = $req->name;
+        $product->price = $req->price;
+        $product->count =$req->quantity;
+        $product->BrandID = $req->type_id;
+        $product->description = $req->description;
+        $product->img=substr($req->image,0,strlen($req->image)-1);
+        $product->save();
+        // dd($product);
+        return redirect(url('admin_product'));
+      }
+      function shop_list()
+      {
+       $sanpham=ShopModel::all();
+       $task=BillModel::select('bill.*','customer.address','customer.name', 'customer.email','customer.phone')
+                    ->join('customer', 'customer.id', '=', 'bill.customer_id')
+                    ->orderBy('status','desc')
+                    ->get()
+                    ->toArray();
+
+        foreach ($task as $key=>$value) {
+            $task[$key]['sp']=BillDetailModel::select('*')->join('products', 'products.id', '=', 'bill_detail.product_id')->where('bill_id',$value['id'])->get()->toArray();
+        }
+        // dd($task);
+        $profile=User::find(Auth::id());
+       return view('admin.admin_shop', compact('shop','profile','task'));
+      }
+       function duyethang($id)
+    {
+        echo AdminController::check();
+        $bai=BillModel::find($id);
+        $bai->status=1;
+        $bai->save();
+          $info="Tổng: ".$bai->total." VND<br>Thời gian đặt: ".$bai->date.'<br>'.'Duyệt lúc '.date('Y-m-d G:i:s')."<br> Hãy chuẩn bị phí khi nhận hàng dự kiến giao trong 2-3 ngày hihi";
+        $cus = CustomerModel::find($bai->customer_id);
+        $to_name=$cus->name;
+        $to_email=$cus->email;
+        // dd($to_email);
+        $bill_detail=BillDetailModel::select('*')->join('products', 'products.id', '=', 'bill_detail.product_id')->where('bill_id',$bai->id)->get()->toArray();
+        // dd($bill_detail);
+           $title="Chào bạn, Chúc mừng đơn hàng số DH".$bai->id." đã được duyệt";
+           $sp="";
+        foreach ($bill_detail as $value) {
+             $anh= explode(',',$value['img']);
+            $sp = $sp.'<tr><td><img style="height:auto;width:100px"  src='.$anh[0]."></td>
+                            <td>".$value['name']."</td> <td>". $value['quantity']."</td><td>".$value['price'].'</td></tr>';
+        }
+      
+           Mail::send('shop.mail',array('name'=>$to_name,'email'=>$to_email,'title'=>$title, 'content'=>$sp,'info'=>$info), function($message) use($to_name, $to_email){
+                $message->to($to_email,$to_name)->subject("Đơn hàng đã được ghi nhận");
+                $message->from('huynhduc12345qaz@gmail.com','Đơn hàng');
+            });
+        return redirect(url('admin_shop'));
+    }
+    
+     function chanhang($id)
+    {
+       echo AdminController::check();
+        $bai=BillModel::find($id);
+        $bai->status=0;
+        $bai->save();
+        // dd($bai);
+          $info="Tổng: ".$bai->total." VND<br>Thời gian đặt: ".$bai->date.'<br>'.'Duyệt lúc '.date('Y-m-d G:i:s');
+        $cus = CustomerModel::find($bai->customer_id);
+        $to_name=$cus->name;
+        $to_email=$cus->email;
+        // dd($to_email);
+        $bill_detail=BillDetailModel::select('*')->join('products', 'products.id', '=', 'bill_detail.product_id')->where('bill_id',$bai->id)->get()->toArray();
+        // dd($bill_detail);
+           $title="Chào bạn, Thật tiếc đơn hàng DH".$bai->id." đã bị từ chối";
+           $sp="";
+           // dd($bill_detail);
+        foreach ($bill_detail as $value) {
+             $anh= explode(',',$value['img']);
+            $sp = $sp.'<tr><td><img style="height:auto;width:100px"  src='.$anh[0]."></td>
+                            <td>".$value['name']."</td> <td>". $value['quantity']."</td><td>".$value['price'].'</td></tr>';
+            $updatesp=ShopModel::find($value['product_id']);
+            $updatesp->count=$updatesp->count+$value['quantity'];
+            $updatesp->save();
+        }
+           Mail::send('shop.mail',array('name'=>$to_name,'email'=>$to_email,'title'=>$title, 'content'=>$sp,'info'=>$info), function($message) use($to_name, $to_email){
+                $message->to($to_email,$to_name)->subject("Đơn hàng đã được ghi nhận");
+                $message->from('huynhduc12345qaz@gmail.com','Đơn hàng');
+            });
+        return redirect(url('admin_shop'));
+    }
 }

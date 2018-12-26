@@ -22,20 +22,19 @@ class Home extends Controller
 			 		->limit(6)
 			 		->get()
 			 		->toArray();
-			  View::share('recentPosts',$recentPosts);
-        $all=HomeModel::select('posts.*','type_name')
+      $all=HomeModel::select('posts.*','type_name')
           ->join('types', 'posts.type_id', '=', 'types.id')
           ->orderBy('created_at','desc')
           ->where('posts.status',2)
            ->where('types.status',1)
           ->get()
           ->toArray();
-          $first=rand(0,count($all)-1);
-          $end=rand(0,count($all)-1);
-          while($first==$end){
-                $first=rand(0,count($all)-1);
-                $end=rand(0,count($all)-1);
-          };
+			  View::share('recentPosts',$recentPosts);
+          do{
+              $first=rand(0,count($all)-1);
+              $end=rand(0,count($all)-1);
+          }
+          while($first==$end);
          $head[0]=$all[$first];
          $head[1]=$all[$end];
          // dd($head); die();
@@ -91,7 +90,7 @@ class Home extends Controller
     }
       function viewPostsViaCategory($category){
       	$post['type']=TypeModel::find($category);
-    	$post['Posts']= TypeModel::find($category)->posts()->where('posts.status',2)->get()->toArray();
+    	$post['Posts']= TypeModel::find($category)->posts()->where('posts.status',2)->paginate(2);
     	 if(Auth::check()){
 			 $profile=User::select('id','name','avatar','account_type','author_intro')->where('id',Auth::id())->get()->first();
 			  View::share('profile', $profile);

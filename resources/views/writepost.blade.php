@@ -75,7 +75,7 @@
 
 
 <!--===============================================================================================-->
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="{{url('vendor/jquery/jquery-3.2.1.min.js')}}"></script>
 <!--===============================================================================================-->
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -118,7 +118,6 @@ var button1 = document.getElementById( 'choose_img' );
 button1.onclick = function() {
 	selectFileWithCKFinder('image');
 };
-
 function selectFileWithCKFinder( elementId ) {
 	CKFinder.popup( {
 		chooseFiles: true,

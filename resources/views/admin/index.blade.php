@@ -32,6 +32,10 @@
                             <a href="url('admin_type')">
                                 <i class="fas fa-chart-bar"></i>User và Thể loại</a>
                         </li>
+                        <li>
+                            <a href="url('admin_shop')">
+                                <i class="fas fa-chart-bar"></i>Shop</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -56,6 +60,19 @@
                             <a href="{{url('admin_type')}}">
                                 <i class="fas fa-chart-bar"></i>User và Thể loại</a>
                         </li>
+                          <li class="has-sub">
+                            <a href="{{url('admin_shop_add')}}">
+                                <i class="fas fa-chart-bar"></i>Thêm sản phẩm</a>
+                        </li>
+                         <li class="has-sub">
+                            <a href="{{url('admin_shop')}}">
+                                <i class="fas fa-chart-bar"></i>Bill</a>
+                        </li>
+                         <li class="has-sub">
+                            <a href="{{url('admin_product')}}">
+                                <i class="fas fa-chart-bar"></i>Hàng và loại hàng</a>
+                        </li>
+
                       
                     </ul>
                 </nav>

@@ -33,10 +33,10 @@
 					@foreach ($head as $value)
 					<div class="col-md-6">
 						<div class="post post-thumb">
-							<a class="post-img" href="{{url('view/'.$value['id'])}}"><img src="{{$value['image']}}" alt=""></a>
+							<a  class="post-img"  href="{{url('view/'.$value['id'])}}"><img style="height: 300px;width: 100%; overflow: hidden;" src="{{$value['image']}}" alt=""></a>
 							<div class="post-body">
 								<div class="post-meta">
-									<a class="post-category cat-{{$value['type_id']}}" href="{{url('category/'.$value['type_id'])}}">JavaScript</a>
+									<a class="post-category cat-{{$value['type_id']}}" href="{{url('category/'.$value['type_id'])}}">{{$value['type_name']}}</a>
 									<span class="post-date">{{$value['created_at']}}  View:{{$value['view_count']}}</span>
 								</div>
 								<h3 class="post-title"><a href="{{url('view/'.$value['id'])}}">{{$value['title']}}</a></h3>
@@ -62,7 +62,9 @@
 					@if($i<=3)
 					<div class="col-md-4">
 						<div class="post">
-							<a class="post-img" href="{{url('view/'.$value['id'])}}"><img src="{{$value['image']}}" alt=""></a>
+							<a class="post-img" href="{{url('view/'.$value['id'])}}"><div class="center-cropped" 
+										     style="background-image: url('{{$value['image']}}');">
+										</div></a>
 							<div class="post-body">
 								<div class="post-meta">
 									<a class="post-category cat-{{$value['type_id']}}" href="{{url('category/'.$value['type_id'])}}">{{$value['type_name']}}</a>
@@ -95,7 +97,7 @@
 							@foreach($recentPosts as $value)
 							<div class="col-md-12">
 								<div class="post post-row">
-									<a class="post-img" href="{{url('view/'.$value['id'])}}"><img src="{{$value['image']}}" alt=""></a>
+									<a class="post-img" href="{{url('view/'.$value['id'])}}"><img <img style="height: 150px;width: 100%; overflow: hidden;" src="{{$value['image']}}" alt=""></a>
 									<div class="post-body">
 										<div class="post-meta">
 											<a class="post-category cat-{{$value['type_id']}}" href="{{url('category/'.$value['type_id'])}}">{{$value['type_name']}}</a>
@@ -103,7 +105,7 @@
 										</div>
 										<h3 class="post-title"><a href="{{url('view/'.$value['id'])}}">{{$value['title']}}</a></h3>
 										
-										<div><?php echo substr($value['content'],0,320);  ?></div>
+										<div>{!!strip_tags ( substr($value['content'],0,100),'<p>' )  !!}...</div>
 									</div>
 								</div>
 							</div>
@@ -242,7 +244,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		var limit=6;
 		function loadmore() {
 			// body...
-			offset+=2;
+			
 			$.getJSON('<?php echo url('loadmore')?>'+'/'+offset+'/'+limit, function(data){
 				console.log(data.length);
 				if(data.length==0){
@@ -253,19 +255,19 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 				data.map(function(elem) {
 					var noidung='<div class="col-md-12">'
 						noidung+='<div class="post post-row">';
-						noidung+='<a class="post-img" href="{{url("view")}}/'+elem.id+'"><img src="'+elem.image+'" alt=""></a>';
+						noidung+='<a class="post-img" href="{{url("view")}}/'+elem.id+'"><img <img style="height: 150px;width: 100%; overflow: hidden;" src="'+elem.image+'" alt=""></a>';
 						noidung+='<div class="post-body">';
 						noidung+='<div class="post-meta">';
 						noidung+='<a class="post-category cat-'+elem.type_id+'" href="{{url('category')}}/'+elem.type_id+'">'+elem.type_name+'</a>';
 						noidung+='<span class="post-date">'+elem.created_at+'</span>';
 						noidung+='</div>';
 						noidung+='<h3 class="post-title"><a href="{{url("view")}}/'+elem.id+'">'+elem.title+'</a></h3>';
-						noidung+='<div>'+elem.content.substr(0, 300)+'</div></div></div>';
+						noidung+='<div>'+elem.content.substr(0, 100).replace(/<(?:.|\n)*?>/gm, '');+'</div></div></div>';
 					$('#tin').append(noidung);
-
 				})
 			}
-			})
+			});
+			offset+=6;
 		}
 	</script>
 	
