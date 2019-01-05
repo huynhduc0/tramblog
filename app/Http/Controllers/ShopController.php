@@ -45,7 +45,7 @@ class ShopController extends Controller
     }
     function viewProduct($id)
     {
-    	$sanpham=ShopModel::select('*')->join('brands_shop','brands_shop.id','products.brandID')->where('products.id',$id)->get()->toArray();
+    	$sanpham=ShopModel::select('products.*','brandname')->join('brands_shop','brands_shop.id','products.brandID')->where('products.id',$id)->get()->toArray();
         // dd($sanpham);
         $sanpham[0]['img']= explode(',',$sanpham[0]['img']);
     	return view('shop.detail',compact('sanpham'));
@@ -60,14 +60,17 @@ class ShopController extends Controller
     	\Cart::add($sanpham['id'], $sanpham['name'], $sanpham['price'], $sl, array(
     		'img'=>$sanpham['img'][0]
     	));
+
     	$cart=\Cart::getContent();
-   		return view('shop.cart',compact('cart'));
+        $total=\Cart::getTotal();
+   		return view('shop.cart',compact('cart','total'));
     }
     function cart()
     {
         \Cart::session(3);
         $cart=\Cart::getContent();
-        return view('shop.cart',compact('cart'));
+          $total=\Cart::getTotal();
+        return view('shop.cart',compact('cart','total'));
     }
     function updateCart(Request $req){
         $sanpham=ShopModel::find($req->id);
@@ -165,10 +168,10 @@ class ShopController extends Controller
     function rate(Request $req)
     {
         $sp=ShopModel::find($req->id);   
-        $sp->rate=($sp->rate*$sp->rate_count+$req->start)/($sp->rate_count+1);
+        $sp->rate=round(($sp->rate*$sp->rate_count+$req->start)/($sp->rate_count+1),2);
         $sp->rate_count=$sp->rate_count+1;
         $sp->save();
-        echo $sp->rate;
+        echo round($sp->rate,2);
     }
     function ratestar($id,$start)
     {
@@ -176,6 +179,7 @@ class ShopController extends Controller
         $sp->rate=($sp->rate*$sp->rate_count+$start)/($sp->rate_count+1);
         $sp->rate_count=$sp->rate_count+1;
         $sp->save();
+         echo $sp->rate;
     }
     function random()
     {
@@ -187,7 +191,7 @@ class ShopController extends Controller
              $id=rand($all[0]['nn'],$all[0]['sl']);
             $sanpham=ShopModel::find($id);
         }
-       $sanpham=ShopModel::select('*')->join('brands_shop','brands_shop.id','products.brandID')->where('products.id',$id)->get()->toArray();
+       $sanpham=ShopModel::select('products.*','brandname')->join('brands_shop','brands_shop.id','products.brandID')->where('products.id',$id)->get()->toArray();
         $sanpham[0]['img']= explode(',',$sanpham[0]['img']);
 
         $random=true;

@@ -6,7 +6,7 @@
         <div class="mobile-nav">
             <!-- Navbar Brand -->
             <div class="amado-navbar-brand">
-                <a href="index.html"><img src="{{url('img/core-img/logo.png')}}" alt=""></a>
+               <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
             </div>
             <!-- Navbar Toggler -->
             <div class="amado-navbar-toggler">
@@ -22,7 +22,7 @@
             </div>
             <!-- Logo -->
             <div class="logo">
-                <a href="index.html"><img src="{{url('img/core-img/logo.png')}}" alt=""></a>
+                 <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
             </div>
             <!-- Amado Nav -->
             <nav class="amado-nav">
@@ -67,7 +67,7 @@
                         <!-- Hover Content -->
                         <div class="hover-content">
                             <div class="line"></div>
-                            <p>{{$value['price']}} VNĐ</p>
+                            <p>{{number_format($value['price'])}} VNĐ</p>
                             <h4>{{$value['name']}}</h4>
                             @if($value['count']==0)
                             <div class="alert alert-warning" role="alert">

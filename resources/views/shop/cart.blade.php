@@ -73,8 +73,7 @@
                 <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                 <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
             </div>
-        </header>
-        <!-- Header Area End -->
+        </header        <!-- Header Area End -->
 
         <div class="cart-table-area section-padding-100">
             <div class="container-fluid">
@@ -131,9 +130,9 @@
                         <div class="cart-summary">
                             <h5>Cart Total</h5>
                             <ul class="summary-table">
-                                <li><span>subtotal:</span> <img class="d-none" id="loading" src="http://bestanimations.com/Science/Gears/loadinggears/loading-gears-animation-13-3.gif" style="width:25px; height: 25px"> <span id="sum"></span></li>
+                                <li><span>total: {{$total}}</span> <img class="d-none" id="loading" src="http://bestanimations.com/Science/Gears/loadinggears/loading-gears-animation-13-3.gif" style="width:25px; height: 25px"> <span id="sum"></span></li>
                                 <li><span>delivery:</span> <span>Free</span></li>
-                                <li><span>total:</span> <span>$140.00</span></li>
+                              
                             </ul>
                             <div class="cart-btn mt-100">
                                 <a href="{{url('shop/checkout')}}" class="btn amado-btn w-100">Checkout</a>

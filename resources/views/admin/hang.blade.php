@@ -397,7 +397,7 @@
                                                         <div class="table-data__info">
                                                             <h6>{{$value['name']}}</h6>
                                                             <span>
-                                                                <a href="#">{{$value['price']}}</a>
+                                                                <a href="#">{{number_format($value['price'])}}</a>
                                                             </span>
                                                         </div>
 

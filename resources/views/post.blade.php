@@ -75,7 +75,7 @@
 							<div class="post-author">
 								<div class="media">
 									<div class="media-left">
-										<img class=" avatar" src="{{url($post['author_info']['avatar'])}}" alt="">
+										<img class=" avatar_cm" src="{{url($post['author_info']['avatar'])}}" alt="">
 									</div>
 									<div class="media-body">
 										<div class="media-heading">
@@ -126,7 +126,7 @@
 									@if($value['reply_id']==0)
 									<div class="media">
 									<div class="media-left">
-										<img class="media-object" src="{{url($value['avatar'])}}" alt="">
+										<img class=" avatar_cm" src="{{url($value['avatar'])}}" alt="">
 									</div>
 									<div class="media-body">
 										<div class="media-heading">
@@ -139,7 +139,7 @@
 											@if($val['reply_id']==$value['id'])
 												<div class="media">
 													<div class="media-left">
-														<img class="media-object" src="{{url($val['avatar'])}}" alt="">
+														<img  class=" avatar_cm"  src="{{url($val['avatar'])}}" alt="">
 													</div>
 													<div class="media-body">
 														<div class="media-heading">
@@ -275,17 +275,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 									</ul>
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="footer-widget">
-									<h3 class="footer-title">Catagories</h3>
-									<ul class="footer-links">
-										<li><a href="category.html">Web Design</a></li>
-										<li><a href="category.html">JavaScript</a></li>
-										<li><a href="category.html">Css</a></li>
-										<li><a href="category.html">Jquery</a></li>
-									</ul>
-								</div>
-							</div>
+							
 						</div>
 					</div>
 

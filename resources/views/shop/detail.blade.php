@@ -12,6 +12,7 @@
                 font-size: 50px;
             }
         </style>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
          <link rel="stylesheet" href="{{url('shop/SimpleStarRating.css')}}">
     <div class="main-content-wrapper d-flex clearfix">
 
@@ -125,7 +126,7 @@
                             <!-- Product Meta Data -->
                             <div class="product-meta-data">
                                 <div class="line"></div>
-                                <p class="product-price">{{$sanpham[0]['price']}} VND</p>
+                                <p class="product-price">{{number_format($sanpham[0]['price'])}} VND</p>
                                 <a href="product-details.html">
                                     <h6>{{$sanpham[0]['name']}}</h6>
                                 </a>
@@ -159,7 +160,8 @@
                                                         type: 'POST',
                                                         data: { _token: "{{ csrf_token() }}",id:{{$sanpham[0]['id']}},start:e.detail},
                                                         success: function(data){
-                                                            alert("cảm ơn bạn đã đánh giá");
+                                                            // alert("cảm ơn bạn đã đánh giá");
+                                                            swal("Cảm ơn bạn đã đánh giá", "bạn chọn "+e.detail +" sao "+" Trung bình là "+data+" sao", "success");
                                                             $("#sao").html(data);
                                                         }
                                                     });

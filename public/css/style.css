@@ -35,6 +35,12 @@ RESPONSIVE
   height: 150px;
   border-radius: 50%;
 }
+.avatar_cm {
+  vertical-align: middle;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
 /*.post .post-row img{
   height: 170px !important;
   width: 100% !important;

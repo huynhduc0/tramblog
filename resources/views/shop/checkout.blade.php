@@ -182,15 +182,15 @@
                                         <td class="price">
                                             <span>{{$value->quantity}}</span>
                                         </td>
-                                        <td>  <span>{{$value['price']*$value['quantity']}}</span></td>
+                                        <td>  <span>{{number_format($value['price']*$value['quantity'])}}</span></td>
                                     </tr>
                                    @endforeach
                                 </tbody>
                             </table>
                             <ul class="summary-table">
-                                <li><span>subtotal:</span> <span>{{$total}}</span></li>
+                                <li><span>subtotal:</span> <span>{{number_format($total)}}</span></li>
                                 <li><span>delivery:</span> <span>Free</span></li>
-                                <li><span>total:</span> <span>{{$total}}</span></li>
+                                <li><span>total:</span> <span>{{number_format($total)}}</span></li>
                             </ul>
 
                             <div class="payment-method">

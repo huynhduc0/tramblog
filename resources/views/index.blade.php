@@ -240,8 +240,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		<!-- jQuery Plugins -->
 	@endsection
 	<script >
-		var offset=6;
-		var limit=6;
+		var offset=2;
+		var limit=2;
 		function loadmore() {
 			// body...
 			
@@ -267,7 +267,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 				})
 			}
 			});
-			offset+=6;
+			offset+=2;
 		}
 	</script>
 	

@@ -334,10 +334,10 @@
                                                 </td>
                                                  <td>
                                                     @foreach ($value['sp'] as $val)
-                                                        {{$val['price']}} <br><hr>
+                                                        {{number_format($val['price'])}} <br><hr>
                                                     @endforeach
                                                 </td>
-                                                 <td>{{$value['total']}}</td>
+                                                 <td>{{number_format($value['total'])}}</td>
                                                     <td>{{$value['note']}}</td>
                                                 <td>{{$value['date']}}</td>
                                                 <td>

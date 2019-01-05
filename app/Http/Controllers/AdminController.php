@@ -284,17 +284,13 @@ class AdminController extends Controller
         $bai=BillModel::find($id);
         $bai->status=0;
         $bai->save();
-        // dd($bai);
           $info="Tổng: ".$bai->total." VND<br>Thời gian đặt: ".$bai->date.'<br>'.'Duyệt lúc '.date('Y-m-d G:i:s');
         $cus = CustomerModel::find($bai->customer_id);
         $to_name=$cus->name;
         $to_email=$cus->email;
-        // dd($to_email);
         $bill_detail=BillDetailModel::select('*')->join('products', 'products.id', '=', 'bill_detail.product_id')->where('bill_id',$bai->id)->get()->toArray();
-        // dd($bill_detail);
            $title="Chào bạn, Thật tiếc đơn hàng DH".$bai->id." đã bị từ chối";
            $sp="";
-           // dd($bill_detail);
         foreach ($bill_detail as $value) {
              $anh= explode(',',$value['img']);
             $sp = $sp.'<tr><td><img style="height:auto;width:100px"  src='.$anh[0]."></td>

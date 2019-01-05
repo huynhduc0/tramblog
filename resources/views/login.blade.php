@@ -46,7 +46,7 @@
                         <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                             <label for="username" class="col-md-4 control-label">Username</label>
                             <div class="col-md-6">
-                                <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required>
+                                <input id="username" type="password" class="form-control" name="password" value="{{ old('username') }}" required>
                                 @if ($errors->has('username'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('username') }}</strong>
@@ -105,7 +105,7 @@
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
-       <input type="text" name="password"  placeholder="username"/>
+       <input type="password" name="password"  placeholder="password"/>
       <button type="submit">login</button>
       <p class="message">Not registered? <a href="#">Create an account</a></p>
     </form>

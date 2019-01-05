@@ -101,74 +101,10 @@
                 </div>
             </div>
             <!-- ##### Single Widget ##### -->
-            <div class="widget brands mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">Brands</h6>
+        
 
-                <div class="widget-desc">
-                    <!-- Single Form Check -->
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="amado">
-                        <label class="form-check-label" for="amado">Amado</label>
-                    </div>
-                    <!-- Single Form Check -->
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="ikea">
-                        <label class="form-check-label" for="ikea">Ikea</label>
-                    </div>
-                    <!-- Single Form Check -->
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="furniture">
-                        <label class="form-check-label" for="furniture">Furniture Inc</label>
-                    </div>
-                    <!-- Single Form Check -->
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="factory">
-                        <label class="form-check-label" for="factory">The factory</label>
-                    </div>
-                    <!-- Single Form Check -->
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="artdeco">
-                        <label class="form-check-label" for="artdeco">Artdeco</label>
-                    </div>
-                </div>
-            </div>
+        
 
-            <!-- ##### Single Widget ##### -->
-            <div class="widget color mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">Color</h6>
-
-                <div class="widget-desc">
-                    <ul class="d-flex">
-                        <li><a href="#" class="color1"></a></li>
-                        <li><a href="#" class="color2"></a></li>
-                        <li><a href="#" class="color3"></a></li>
-                        <li><a href="#" class="color4"></a></li>
-                        <li><a href="#" class="color5"></a></li>
-                        <li><a href="#" class="color6"></a></li>
-                        <li><a href="#" class="color7"></a></li>
-                        <li><a href="#" class="color8"></a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- ##### Single Widget ##### -->
-            <div class="widget price mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">Price</h6>
-
-                <div class="widget-desc">
-                    <div class="slider-range">
-                        <div data-min="10" data-max="1000" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="10" data-value-max="1000" data-label-result="">
-                            <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                        </div>
-                        <div class="range-price">$10 - $1000</div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="amado_product_area section-padding-100">
@@ -221,12 +157,12 @@
                         <div class="single-product-wrapper">
                             <!-- Product Image -->
                             <div class="product-img">
-                                <img style="height: 210px; overflow: hidden;" src="{{$value['img'][0]}}" alt="">
+                                <img style="height: 220px; overflow: hidden;" src="{{$value['img'][0]}}" alt="">
                                 <!-- Hover Thumb -->
                                 @if(count($value['img'])>1)
-                                <img style="height: 210px; overflow: hidden;" class="hover-img"  src="{{$value['img'][1]}}" alt="">
+                                <img style="height: 220px; overflow: hidden;" class="hover-img"  src="{{$value['img'][1]}}" alt="">
                                 @else
-                                 <img style="height: 210px; overflow: hidden;" class="hover-img" src="{{$value['img'][0]}}" alt="">
+                                 <img style="height: 220px; overflow: hidden;" class="hover-img" src="{{$value['img'][0]}}" alt="">
                                  @endif
                             </div>
 
@@ -235,9 +171,14 @@
                                 <!-- Product Meta Data -->
                                 <div class="product-meta-data">
                                     <div class="line"></div>
-                                    <p class="product-price">{{ $value['price'] }}VND</p>
+                                    <p class="product-price">{{ number_format( $value['price']) }}VND</p>
                                     <a href="{{url('shop/detail/'.$value['id'])}}">
                                         <h6>{{ $value['name'] }}</h6>
+                                        @if($value['count']==0)
+                            <div class="alert alert-warning" role="alert">
+                                <strong>Tạm hết hàng</strong>
+                            </div>
+                            @endif
                                     </a>
                                 </div>
                                 <!-- Ratings & Cart -->
